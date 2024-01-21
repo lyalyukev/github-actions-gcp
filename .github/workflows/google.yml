@@ -15,9 +15,22 @@ jobs:
           create_credentials_file: 'true'
           workload_identity_provider: 'projects/448492338462/locations/global/workloadIdentityPools/workload-example/providers/github'
           service_account: 'github@booming-crowbar-407418.iam.gserviceaccount.com'
+          
     - id: 'gcloud'
       name: 'gcloud'
       run: |-
         gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
         gcloud services list
+        
+    - id: 'secrets'
+      uses: 'google-github-actions/get-secretmanager-secrets@v2'
+      with:
+        secrets: |-
+          token:booming-crowbar-407418/teletoken
+          
+    - id: 'publish'
+      env:
+        TOKEN: '${{ steps.secrets.outputs.token }}'
+      run: |-
+        echo TOKEN
         
