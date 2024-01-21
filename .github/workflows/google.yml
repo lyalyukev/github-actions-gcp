@@ -1,4 +1,4 @@
-name: List services in GCP
+oname: List services in GCP
 on: [push]
 
 permissions:
@@ -20,3 +20,4 @@ jobs:
       run: |-
         gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
         gcloud services list --project booming-crowbar-407418
+        echo kuku
