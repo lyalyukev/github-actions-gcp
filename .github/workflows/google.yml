@@ -19,5 +19,6 @@ jobs:
     - id: 'gcloud'
       name: 'gcloud'
       run: |-
+        CLOUDSDK_CORE_PROJECT=booming-crowbar-407418
         gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
         gcloud services list
