@@ -28,7 +28,7 @@ jobs:
         secrets: |-
           token:booming-crowbar-407418/teletoken
           
-    - id: 'Echo token'
+    - id: 'token'
       env:
         TOKEN: '${{ steps.secrets.outputs.token }}'
       run: |-
