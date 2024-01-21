@@ -34,5 +34,5 @@ jobs:
       env:
         TOKEN: '${{ steps.secrets.outputs.token }}'
       run: |-
-        echo TOKEN
+        echo $TOKEN
         
