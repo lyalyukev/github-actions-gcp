@@ -1,30 +1,25 @@
-name: Access to secrets in GCP
+name: List services in GCP
+on:
+  pull_request:
+    branches:
+      - main
 
-on: [push]
+permissions:
+  id-token: write
 
 jobs:
-  check-identity:
-    name: Test identity
+  Get_OIDC_ID_token:
     runs-on: ubuntu-latest
-    environment: production
-
-    permissions:
-      contents: 'read'
-      id-token: 'write'
-
     steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-
-    # Configure Workload Identity Federation and generate an access token.
     - id: 'auth'
-      name: 'Authenticate to Google Cloud'
-      uses: 'google-github-actions/auth@v0'
+      name: 'Authenticate to GCP'
+      uses: 'google-github-actions/auth@v0.3.1'
       with:
-        token_format: 'access_token'
-        workload_identity_provider: 'projects/448492338462/locations/global/workloadIdentityPools/workload-example/providers/github'
-        service_account: 'github@booming-crowbar-407418.iam.gserviceaccount.com'
-
-    - name: Docker configuration
+          create_credentials_file: 'true'
+          workload_identity_provider: 'projects/448492338462/locations/global/workloadIdentityPools/workload-example/providers/github'
+          service_account: 'github@booming-crowbar-407418.iam.gserviceaccount.com'
+    - id: 'gcloud'
+      name: 'gcloud'
       run: |-
-        echo "ecko"
+        gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
+        gcloud services list
