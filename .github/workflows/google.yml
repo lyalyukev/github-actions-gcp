@@ -18,7 +18,9 @@ jobs:
           project_id: 'booming-crowbar-407418'
     - id: 'gcloud'
       name: 'gcloud'
+      env:
+        PROJECT_ID: 'booming-crowbar-407418'
       run: |-
-        CLOUDSDK_CORE_PROJECT=booming-crowbar-407418
         gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
+        gcloud config set project $PROJECT_ID
         gcloud services list
