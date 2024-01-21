@@ -19,4 +19,5 @@ jobs:
       name: 'gcloud'
       run: |-
         gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
-        echo kuku
+        echo ${{ steps.auth.outputs.credentials_file_path }}
+        ls -lh
