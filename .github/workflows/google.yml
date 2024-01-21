@@ -1,4 +1,4 @@
-oname: List services in GCP
+name: List services in GCP
 on: [push]
 
 permissions:
