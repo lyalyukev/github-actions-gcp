@@ -15,6 +15,7 @@ jobs:
           create_credentials_file: 'true'
           workload_identity_provider: 'projects/448492338462/locations/global/workloadIdentityPools/workload-example/providers/github'
           service_account: 'github@booming-crowbar-407418.iam.gserviceaccount.com'
+          project_id: 'booming-crowbar-407418'
     - id: 'gcloud'
       name: 'gcloud'
       run: |-
