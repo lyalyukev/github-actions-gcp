@@ -23,12 +23,14 @@ jobs:
         gcloud services list
         
     - id: 'secrets'
+      name: 'Get Secret'
       uses: 'google-github-actions/get-secretmanager-secrets@v2'
       with:
         secrets: |-
           token:booming-crowbar-407418/teletoken
           
     - id: 'token'
+      name: 'Echo Token'
       env:
         TOKEN: '${{ steps.secrets.outputs.token }}'
       run: |-
