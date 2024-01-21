@@ -19,5 +19,5 @@ jobs:
       name: 'gcloud'
       run: |-
         gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
-        gcloud services list --project booming-crowbar-407418
+        gcloud services list
         echo kuku
