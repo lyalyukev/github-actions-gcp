@@ -1,8 +1,5 @@
 name: List services in GCP
-on:
-  pull_request:
-    branches:
-      - main
+on: [push]
 
 permissions:
   id-token: write
