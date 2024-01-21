@@ -23,8 +23,7 @@ jobs:
       with:
         token_format: 'access_token'
         workload_identity_provider: 'projects/448492338462/locations/global/workloadIdentityPools/workload-example/providers/github'
-        service_account: 'principal://iam.googleapis.com/projects/448492338462/locations/global/workloadIdentityPools/workload-example/subject/lyalyukev/github-actions-gcp'
-        project_id: 'booming-crowbar-407418'
+        service_account: 'github@booming-crowbar-407418.iam.gserviceaccount.com'
 
     - name: Docker configuration
       run: |-
