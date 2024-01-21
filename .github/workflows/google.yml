@@ -15,12 +15,8 @@ jobs:
           create_credentials_file: 'true'
           workload_identity_provider: 'projects/448492338462/locations/global/workloadIdentityPools/workload-example/providers/github'
           service_account: 'github@booming-crowbar-407418.iam.gserviceaccount.com'
-          project_id: 'booming-crowbar-407418'
     - id: 'gcloud'
       name: 'gcloud'
-      env:
-        PROJECT_ID: 'booming-crowbar-407418'
       run: |-
         gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
-        gcloud config set project $PROJECT_ID
         gcloud services list
