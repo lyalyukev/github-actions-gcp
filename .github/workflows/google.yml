@@ -10,7 +10,7 @@ jobs:
     steps:
     - id: 'auth'
       name: 'Authenticate to GCP'
-      uses: 'google-github-actions/auth@v0.3.1'
+      uses: 'google-github-actions/auth@v2'
       with:
           create_credentials_file: 'true'
           workload_identity_provider: 'projects/448492338462/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
@@ -19,5 +19,4 @@ jobs:
       name: 'gcloud'
       run: |-
         gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
-        echo ${{ steps.auth.outputs.credentials_file_path }}
-        ls -lh
+        gcloud services list
