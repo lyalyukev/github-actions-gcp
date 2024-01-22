@@ -40,10 +40,10 @@ jobs:
         kubectl create secret docker-registry ghcr-secret -n demo --docker-server=ghcr.io --docker-username=lyalyukev --docker-password=$secrets.GITHUB_TOKEN --dry-run=client -o yaml > ghcr-secret.yaml
         cat ghcr-secret.yaml
     - id: 'repo'
-      name: Checkout repository
+      name: 'Checkout repository'
       uses: actions/checkout@v3
-    - id: 'check files'
-      name: check file
+    - id: 'check_files'
+      name: 'check file'
       run: |-
         ls -lh
         
