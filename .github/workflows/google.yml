@@ -37,4 +37,5 @@ jobs:
         echo $TOKEN
         kubectl create secret generic tbot --from-literal=tele_token=$TOKEN -n demo --dry-run=client -o yaml > tbot-secret.yaml
         cat tbot-secret.yaml
-        sops
+        kubectl create secret docker-registry ghcr-secret -n demo --docker-server=ghcr.io --docker-username=lyalyukev --docker-password=$secrets.GITHUB_TOKEN --dry-run=client -o yaml > ghcr-secret.yaml
+        cat ghcr-secret.yaml
