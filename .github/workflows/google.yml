@@ -45,6 +45,10 @@ jobs:
     - id: 'check_files'
       name: 'check file'
       run: |-
-        ls -lh
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add tbot-secret.yaml ghcr-secret.yaml
+        git commit -m "Add files"
+        git push
         
         
