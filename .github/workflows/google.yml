@@ -35,5 +35,6 @@ jobs:
         TOKEN: '${{ steps.secrets.outputs.token }}'
       run: |-
         echo $TOKEN
-        kubectl
-        
+        kubectl create secret generic tbot --from-literal=tele_token=$TOKEN -n demo --dry-run=client -o yaml > tbot-secret.yaml
+        cat tbot-secret.yaml
+        sops
