@@ -56,6 +56,6 @@ jobs:
         git config --local user.name "GitHub Action"
         git add tbot-secret.yaml ghcr-secret.yaml
         git commit -m "Add files"
-        git push
+        git push origin main
         
         
