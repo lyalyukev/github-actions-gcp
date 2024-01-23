@@ -29,6 +29,10 @@ jobs:
         secrets: |-
           token:booming-crowbar-407418/teletoken
           
+    - id: 'repo'
+      name: 'Checkout repository'
+      uses: actions/checkout@v3
+      
     - id: 'token'
       name: 'Echo Token'
       env:
@@ -45,9 +49,6 @@ jobs:
           chmod +x sops
         fi
         ./sops --help
-    - id: 'repo'
-      name: 'Checkout repository'
-      uses: actions/checkout@v3
     - id: 'check_files'
       name: 'check file'
       run: |-
