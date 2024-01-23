@@ -50,6 +50,7 @@ jobs:
       run: |-
         ./sops -e -gcp-kms projects/booming-crowbar-407418/locations/global/keyRings/sops-flux2/cryptoKeys/sops-key-flux --encrypted-regex='^(tele_token)$' tbot-secret.yaml > ./clusters/demo/tbot-secret.yaml
         ./sops -e -gcp-kms projects/booming-crowbar-407418/locations/global/keyRings/sops-flux2/cryptoKeys/sops-key-flux --encrypted-regex='^(data|.dockerconfigjson)$' ghcr-secret.yaml > ./clusters/demo/ghcr-secret.yaml
+
    
     - id: 'add_files_to_repo'
       name: 'Add files to repo'
