@@ -55,7 +55,7 @@ jobs:
         git config user.name github-actions
         git config user.email github-actions@github.com
         git add tbot-secret.yaml ghcr-secret.yaml
-        git commit -am "Add files"
+        git commit -am "Add files to repo"
         git push
 
         
