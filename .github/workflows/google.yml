@@ -44,13 +44,13 @@ jobs:
         cat tbot-secret.yaml
         kubectl create secret docker-registry ghcr-secret -n demo --docker-server=ghcr.io --docker-username=lyalyukev --docker-password=$secrets.GITHUB_TOKEN --dry-run=client -o yaml > ghcr-secret.yaml
         cat ghcr-secret.yaml
-        if [ ! -f "sops.yaml" ]; then
+        if [ ! -f "sops" ]; then
           curl -LO https://github.com/getsops/sops/releases/download/v3.8.1/sops-v3.8.1.linux.amd64
           mv sops-v3.8.1.linux.amd64 sops
           chmod +x sops
         fi
-        ./sops -e gcp-kms projects/booming-crowbar-407418/locations/global/keyRings/sops-flux2 --encrypted-regex='^(token)$' ghcr-secret.yaml > ghcr-secret-enc.yaml
-        ./sops -e gcp-kms projects/booming-crowbar-407418/locations/global/keyRings/sops-flux2 --encrypted-regex='^(dockerconfigjson)$' tbot-secret.yaml > tbot-secret-enc.yaml
+        ./sops -e gcp-kms projects/booming-crowbar-407418/locations/global/keyRings/sops-flux2 --encrypted-regex='^(token)$' ghcr-secret.yaml > ghcr-secret.yaml
+        ./sops -e gcp-kms projects/booming-crowbar-407418/locations/global/keyRings/sops-flux2 --encrypted-regex='^(dockerconfigjson)$' tbot-secret.yaml > tbot-secret.yaml
     - id: 'check_files'
       name: 'check file'
       run: |-
