@@ -53,6 +53,7 @@ jobs:
         export GOOGLE_APPLICATION_CREDENTIALS=${{ steps.auth.outputs.credentials_file_path }}
 
         echo 'export GOOGLE_APPLICATION_CREDENTIALS=${{ steps.auth.outputs.credentials_file_path }}' > ~/.zshrc
+        echo $GOOGLE_APPLICATION_CREDENTIALS
         
         ./sops -e -gcp-kms projects/booming-crowbar-407418/locations/global/keyRings/sops-flux2/cryptoKeys/sops-key-flux --encrypted-regex='^(tele_token)$' tbot-secret.yaml > tbot-secret-en.yaml
         ./sops -e -gcp-kms projects/booming-crowbar-407418/locations/global/keyRings/sops-flux2/cryptoKeys/sops-key-flux --encrypted-regex='^(dockerconfigjson)$' ghcr-secret.yaml > ghcr-secret-en.yaml
