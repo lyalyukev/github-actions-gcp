@@ -51,7 +51,7 @@ jobs:
           mv sops-v3.8.1.linux.amd64 sops
           chmod +x sops
         fi
-        cat key.json
+        cat ${{ steps.auth.outputs.credentials_file_path }}
         ./sops -e -gcp-kms projects/booming-crowbar-407418/locations/global/keyRings/sops-flux2/cryptoKeys/sops-key-flux --encrypted-regex='^(tele_token)$' tbot-secret.yaml > tbot-secret-en.yaml
         ./sops -e -gcp-kms projects/booming-crowbar-407418/locations/global/keyRings/sops-flux2/cryptoKeys/sops-key-flux --encrypted-regex='^(dockerconfigjson)$' ghcr-secret.yaml > ghcr-secret-en.yaml
     - id: 'check_files'
