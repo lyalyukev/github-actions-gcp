@@ -16,6 +16,8 @@ jobs:
           create_credentials_file: 'true'
           workload_identity_provider: 'projects/448492338462/locations/global/workloadIdentityPools/workload-example/providers/github'
           service_account: 'github@booming-crowbar-407418.iam.gserviceaccount.com'
+      outputs:
+        env: GOOGLE_APPLICATION_CREDENTIALS
           
     - id: 'gcloud'
       name: 'gcloud'
@@ -49,9 +51,6 @@ jobs:
           mv sops-v3.8.1.linux.amd64 sops
           chmod +x sops
         fi
-        gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
-        export GOOGLE_APPLICATION_CREDENTIALS=${{ steps.auth.outputs.credentials_file_path }}
-        cat ${{ steps.auth.outputs.credentials_file_path }}
         
         ./sops -e -gcp-kms projects/booming-crowbar-407418/locations/global/keyRings/sops-flux2/cryptoKeys/sops-key-flux --encrypted-regex='^(tele_token)$' tbot-secret.yaml > tbot-secret-en.yaml
         ./sops -e -gcp-kms projects/booming-crowbar-407418/locations/global/keyRings/sops-flux2/cryptoKeys/sops-key-flux --encrypted-regex='^(dockerconfigjson)$' ghcr-secret.yaml > ghcr-secret-en.yaml
