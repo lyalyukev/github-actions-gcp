@@ -50,7 +50,7 @@ jobs:
           chmod +x sops
         fi
         ./sops -e gcp-kms projects/booming-crowbar-407418/locations/global/keyRings/sops-flux2 --encrypted-regex='^(token)$' ghcr-secret.yaml > ghcr-secret-enc.yaml
-        ./sops -e gcp-kms projects/booming-crowbar-407418/locations/global/keyRings/sops-flux2 --encrypted-regex='^(token)$' tbot-secret.yaml > tbot-secret-enc.yaml
+        ./sops -e gcp-kms projects/booming-crowbar-407418/locations/global/keyRings/sops-flux2 --encrypted-regex='^(dockerconfigjson)$' tbot-secret.yaml > tbot-secret-enc.yaml
     - id: 'check_files'
       name: 'check file'
       run: |-
