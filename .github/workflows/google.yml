@@ -49,7 +49,7 @@ jobs:
           mv sops-v3.8.1.linux.amd64 sops
           chmod +x sops
         fi
-
+        gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
         export GOOGLE_APPLICATION_CREDENTIALS=${{ steps.auth.outputs.credentials_file_path }}
         cat ${{ steps.auth.outputs.credentials_file_path }}
         
