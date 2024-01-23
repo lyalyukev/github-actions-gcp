@@ -20,15 +20,7 @@ jobs:
           create_credentials_file: 'true'
           workload_identity_provider: 'projects/448492338462/locations/global/workloadIdentityPools/workload-example/providers/github'
           service_account: 'github@booming-crowbar-407418.iam.gserviceaccount.com'
-          
-    - id: 'gcloud'
-      name: 'gcloud'
-      run: |-
-        cat ${{ steps.auth.outputs.credentials_file_path }} > key.json
-        gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
-        gcloud services list
-        cat ${{ steps.auth.outputs.credentials_file_path }}
-        
+             
     - id: 'secrets'
       name: 'Get Secret'
       uses: 'google-github-actions/get-secretmanager-secrets@v2'
@@ -41,26 +33,31 @@ jobs:
       env:
         TOKEN: '${{ steps.secrets.outputs.token }}'
       run: |-
-        echo $TOKEN
         kubectl create secret generic tbot --from-literal=tele_token=$TOKEN -n demo --dry-run=client -o yaml > tbot-secret.yaml
-        cat tbot-secret.yaml
         kubectl create secret docker-registry ghcr-secret -n demo --docker-server=ghcr.io --docker-username=lyalyukev --docker-password=$secrets.GITHUB_TOKEN --dry-run=client -o yaml > ghcr-secret.yaml
-        cat ghcr-secret.yaml
+
+    - id: 'download_sops'
+      name: 'Download SOPS'
+      run: |-
         if [ ! -f "sops" ]; then
           curl -LO https://github.com/getsops/sops/releases/download/v3.8.1/sops-v3.8.1.linux.amd64
           mv sops-v3.8.1.linux.amd64 sops
           chmod +x sops
         fi
-        cat ${{ steps.auth.outputs.credentials_file_path }}
-        ./sops -e -gcp-kms projects/booming-crowbar-407418/locations/global/keyRings/sops-flux2/cryptoKeys/sops-key-flux --encrypted-regex='^(tele_token)$' tbot-secret.yaml > tbot-secret-en.yaml
-        ./sops -e -gcp-kms projects/booming-crowbar-407418/locations/global/keyRings/sops-flux2/cryptoKeys/sops-key-flux --encrypted-regex='^(data|.dockerconfigjson)$' ghcr-secret.yaml > ghcr-secret-en.yaml
-    - id: 'check_files'
-      name: 'check file'
+        
+    - id: 'encrypt_secrets'
+      name: 'Encrypt Secrets'
+      run: |-
+        ./sops -e -gcp-kms projects/booming-crowbar-407418/locations/global/keyRings/sops-flux2/cryptoKeys/sops-key-flux --encrypted-regex='^(tele_token)$' tbot-secret.yaml > ./clusters/demo/tbot-secret.yaml
+        ./sops -e -gcp-kms projects/booming-crowbar-407418/locations/global/keyRings/sops-flux2/cryptoKeys/sops-key-flux --encrypted-regex='^(data|.dockerconfigjson)$' ghcr-secret.yaml > ./clusters/demo/ghcr-secret.yaml
+   
+    - id: 'add_files_to_repo'
+      name: 'Add files to repo'
       run: |-
         git config user.name github-actions
         git config user.email github-actions@github.com
         git add tbot-secret-en.yaml ghcr-secret-en.yaml
-        git commit -am "Add files "
+        git commit -am "Add files secrets"
         git push
 
         
