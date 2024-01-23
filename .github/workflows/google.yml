@@ -3,6 +3,7 @@ on: [push]
 
 permissions:
   id-token: write
+  contents: write
 
 jobs:
   Get_OIDC_ID_token:
