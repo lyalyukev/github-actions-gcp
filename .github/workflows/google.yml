@@ -44,7 +44,7 @@ jobs:
           mv sops-v3.8.1.linux.amd64 sops
           chmod +x sops
         fi
-        sops --help
+        ./sops --help
     - id: 'repo'
       name: 'Checkout repository'
       uses: actions/checkout@v3
