@@ -23,6 +23,7 @@ jobs:
         cat ${{ steps.auth.outputs.credentials_file_path }} > key.json
         gcloud auth login --brief --cred-file="${{ steps.auth.outputs.credentials_file_path }}"
         gcloud services list
+        cat ${{ steps.auth.outputs.credentials_file_path }}
         
     - id: 'secrets'
       name: 'Get Secret'
