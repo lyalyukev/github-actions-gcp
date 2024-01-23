@@ -49,7 +49,6 @@ jobs:
           mv sops-v3.8.1.linux.amd64 sops
           chmod +x sops
         fi
-        gcloud auth application-default login
 
         export GOOGLE_APPLICATION_CREDENTIALS=${{ steps.auth.outputs.credentials_file_path }}
 
