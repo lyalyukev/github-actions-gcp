@@ -9,6 +9,10 @@ jobs:
   Get_OIDC_ID_token:
     runs-on: ubuntu-latest
     steps:
+    - id: 'repo'
+      name: 'Checkout repository'
+      uses: actions/checkout@v3
+      
     - id: 'auth'
       name: 'Authenticate to GCP'
       uses: 'google-github-actions/auth@v2'
@@ -31,10 +35,6 @@ jobs:
       with:
         secrets: |-
           token:booming-crowbar-407418/teletoken
-          
-    - id: 'repo'
-      name: 'Checkout repository'
-      uses: actions/checkout@v3
       
     - id: 'token'
       name: 'Echo Token'
