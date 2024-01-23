@@ -57,7 +57,7 @@ jobs:
       run: |-
         git config user.name github-actions
         git config user.email github-actions@github.com
-        git add tbot-secret-en.yaml ghcr-secret-en.yaml
+        git add ./clusters/demo/tbot-secret-en.yaml ./clusters/demo/ghcr-secret-en.yaml
         git commit -am "Add files secrets"
         git push
 
